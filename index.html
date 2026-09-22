@@ -48,8 +48,8 @@
             background-color: #ffe600;
             color: #4a4a4a;
             border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
+            padding: 14px 28px;
+            font-size: 1.1rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
@@ -82,9 +82,9 @@
         <!-- Botón para activar la música -->
         <button class="music-btn" id="playBtn" onclick="toggleMusic()">Escuchar música 🎵</button>
         
-        <!-- Reproductor oculto de YouTube con la canción Tiroteo -->
-        <div style="display:none;">
-            <iframe id="youtubePlayer" width="1" height="1" src="https://youtube.com" frameborder="0" allow="autoplay"></iframe>
+        <!-- Contenedor oculto de forma segura enviándolo fuera de la pantalla -->
+        <div style="position: absolute; top: -1000px; left: -1000px; width: 1px; height: 1px; overflow: hidden;">
+            <iframe id="youtubePlayer" width="100" height="100" src="https://youtube.com" frameborder="0" allow="autoplay"></iframe>
         </div>
         
         <div style="font-size: 40px; margin-top: 25px;">🌼✨💛✨🌼</div>
@@ -94,12 +94,11 @@
         var playing = false;
         var player;
         
-        // Carga la API de YouTube de forma segura
+        // Carga la API oficial de YouTube
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtubePlayer');
         }
         
-        // Cargar el script de la API
         var tag = document.createElement('script');
         tag.src = "https://youtube.com";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -108,10 +107,14 @@
         function toggleMusic() {
             var btn = document.getElementById('playBtn');
             if (!playing) {
-                player.playVideo();
-                btn.innerText = "Pausar música ⏸️";
-                btn.style.backgroundColor = "#e6c300";
-                playing = true;
+                if (player && typeof player.playVideo === 'function') {
+                    player.playVideo();
+                    btn.innerText = "Pausar música ⏸️";
+                    btn.style.backgroundColor = "#e6c300";
+                    playing = true;
+                } else {
+                    alert("Cargando la música... Intenta presionar el botón una vez más.");
+                }
             } else {
                 player.pauseVideo();
                 btn.innerText = "Escuchar música 🎵";
