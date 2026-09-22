@@ -22,7 +22,7 @@
             background: white;
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(24fd, 214, 0, 0.15);
+            box-shadow: 0 10px 20px rgba(253, 214, 0, 0.15);
             max-width: 450px;
             border: 2px solid #fceb92;
         }
@@ -43,6 +43,23 @@
         .heart {
             color: #e2b616;
         }
+        /* Estilo para el botón de música */
+        .music-btn {
+            background-color: #ffe600;
+            color: #4a4a4a;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        .music-btn:active {
+            transform: scale(0.95);
+        }
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -62,8 +79,47 @@
         
         <p>¡Espero que te saque una sonrisa! ✨</p>
         
-        <div style="font-size: 40px; margin-top: 20px;">🌼✨💛✨🌼</div>
+        <!-- Botón para activar la música -->
+        <button class="music-btn" id="playBtn" onclick="toggleMusic()">Escuchar música 🎵</button>
+        
+        <!-- Reproductor oculto de YouTube con la canción Tiroteo -->
+        <div style="display:none;">
+            <iframe id="youtubePlayer" width="1" height="1" src="https://youtube.com" frameborder="0" allow="autoplay"></iframe>
+        </div>
+        
+        <div style="font-size: 40px; margin-top: 25px;">🌼✨💛✨🌼</div>
     </div>
+
+    <script>
+        var playing = false;
+        var player;
+        
+        // Carga la API de YouTube de forma segura
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer');
+        }
+        
+        // Cargar el script de la API
+        var tag = document.createElement('script');
+        tag.src = "https://youtube.com";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function toggleMusic() {
+            var btn = document.getElementById('playBtn');
+            if (!playing) {
+                player.playVideo();
+                btn.innerText = "Pausar música ⏸️";
+                btn.style.backgroundColor = "#e6c300";
+                playing = true;
+            } else {
+                player.pauseVideo();
+                btn.innerText = "Escuchar música 🎵";
+                btn.style.backgroundColor = "#ffe600";
+                playing = false;
+            }
+        }
+    </script>
 
 </body>
 </html>
