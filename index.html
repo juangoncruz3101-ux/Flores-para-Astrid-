@@ -43,22 +43,13 @@
         .heart {
             color: #e2b616;
         }
-        /* Estilo para el botón de música */
-        .music-btn {
-            background-color: #ffe600;
-            color: #4a4a4a;
-            border: none;
-            padding: 14px 28px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            margin-top: 15px;
-        }
-        .music-btn:active {
-            transform: scale(0.95);
+        /* Contenedor del reproductor de música */
+        .music-container {
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #fceb92;
         }
         @keyframes float {
             0% { transform: translateY(0px); }
@@ -79,50 +70,15 @@
         
         <p>¡Espero que te saque una sonrisa! ✨</p>
         
-        <!-- Botón para activar la música -->
-        <button class="music-btn" id="playBtn" onclick="toggleMusic()">Escuchar música 🎵</button>
+        <p style="font-size: 1rem; color: #8a8a8a; margin-top: 20px; margin-bottom: 5px;">🎵 Dale play para escuchar su canción:</p>
         
-        <!-- Contenedor oculto de forma segura enviándolo fuera de la pantalla -->
-        <div style="position: absolute; top: -1000px; left: -1000px; width: 1px; height: 1px; overflow: hidden;">
-            <iframe id="youtubePlayer" width="100" height="100" src="https://youtube.com" frameborder="0" allow="autoplay"></iframe>
+        <!-- Mini Reproductor de YouTube Estable -->
+        <div class="music-container">
+            <iframe width="100%" height="120" src="https://youtube.com" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         
         <div style="font-size: 40px; margin-top: 25px;">🌼✨💛✨🌼</div>
     </div>
-
-    <script>
-        var playing = false;
-        var player;
-        
-        // Carga la API oficial de YouTube
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtubePlayer');
-        }
-        
-        var tag = document.createElement('script');
-        tag.src = "https://youtube.com";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        function toggleMusic() {
-            var btn = document.getElementById('playBtn');
-            if (!playing) {
-                if (player && typeof player.playVideo === 'function') {
-                    player.playVideo();
-                    btn.innerText = "Pausar música ⏸️";
-                    btn.style.backgroundColor = "#e6c300";
-                    playing = true;
-                } else {
-                    alert("Cargando la música... Intenta presionar el botón una vez más.");
-                }
-            } else {
-                player.pauseVideo();
-                btn.innerText = "Escuchar música 🎵";
-                btn.style.backgroundColor = "#ffe600";
-                playing = false;
-            }
-        }
-    </script>
 
 </body>
 </html>
